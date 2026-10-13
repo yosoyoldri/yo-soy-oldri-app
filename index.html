@@ -220,6 +220,7 @@
           <p class="hero-sub">Música urbana · Dembow · Reggaetón · Reparto</p>
           <p class="lede">This is the official website of the <strong>Yo Soy Oldri</strong> app — the artist's own publishing tool. It connects to TikTok through the official <strong>Login Kit</strong> and <strong>Content Posting API</strong> so the artist can upload and publish his original music videos directly to his own account, <strong>@yo.soy.oldri</strong>, without third-party uploaders.</p>
           <div class="hero-cta">
+            <a class="btn solid" id="connectBtn" href="#">Connect TikTok account</a>
             <a class="btn solid" href="#terms">Terms of Service</a>
             <a class="btn ghost" href="#privacy">Privacy Policy</a>
           </div>
@@ -467,6 +468,27 @@
     window.addEventListener("hashchange", render);
     render();
   })();
+</script>
+<section class="wrap" id="publish" style="padding:26px 20px 10px">
+  <div class="panel">
+    <h3>Publish with TikTok — Sandbox demo</h3>
+    <p id="authStatus" style="color:var(--ink-soft);margin:0 0 14px">This page is the app's home for its TikTok integration. Use the button above to connect a TikTok account through TikTok Login Kit (sandbox). After you authorize, TikTok returns you to this page and the app can publish the artist's videos to the connected account through the Content Posting API (Direct Post).</p>
+    <p class="mono" style="font-size:13px;color:var(--ink-faint);margin:0">Integration: Login Kit (user.info.basic) · Content Posting API — Direct Post (video.publish) · Upload (video.upload)</p>
+  </div>
+</section>
+<script>
+(function(){
+  var url = "https://www.tiktok.com/v2/auth/authorize/?client_key=sbaw7k62n0lx5koir8&scope=user.info.basic,video.publish,video.upload&response_type=code&redirect_uri=https%3A%2F%2Fyosoyoldri.github.io%2Fyo-soy-oldri-app%2F&state=oldri-demo";
+  var btn = document.getElementById("connectBtn");
+  if (btn) { btn.setAttribute("href", url); }
+  var code = new URLSearchParams(window.location.search).get("code");
+  if (code) {
+    var s = document.getElementById("authStatus");
+    if (s) { s.innerHTML = "<strong>Authorization successful.</strong> TikTok returned an authorization code to this page. The app now exchanges it securely on its backend and can publish to the connected TikTok account via the Content Posting API (Direct Post)."; }
+    var p = document.getElementById("publish");
+    if (p) { p.scrollIntoView(); }
+  }
+})();
 </script>
 </body>
 </html>
